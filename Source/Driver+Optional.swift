@@ -6,7 +6,7 @@ public extension Driver where Element: OptionalType {
 
      - returns: `Driver` of source `Driver`'s elements, with `nil` elements filtered out.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
+    @warn_unused_result(message:"http://git.io/rxs.uo")
     public func filterNil() -> Driver<Element.Wrapped> {
         return self.flatMap { element -> Driver<Element.Wrapped> in
             guard let value = element.value else {
@@ -23,8 +23,8 @@ public extension Driver where Element: OptionalType {
 
      - returns: `Driver` of the source `Driver`'s unwrapped elements, with `nil` elements replaced by `valueOnNil`.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func replaceNilWith(valueOnNil: Element.Wrapped) -> Driver<Element.Wrapped> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func replaceNilWith(_ valueOnNil: Element.Wrapped) -> Driver<Element.Wrapped> {
         return self.map { element -> E.Wrapped in
             guard let value = element.value else {
                 return valueOnNil
@@ -40,8 +40,8 @@ public extension Driver where Element: OptionalType {
 
      - returns: `Driver` of the source `Driver`'s unwrapped elements, with `nil` elements replaced by the handler's returned non-`nil` elements.
      */
-    @warn_unused_result(message="http://git.io/rxs.uo")
-    public func catchOnNil(handler: () -> Driver<Element.Wrapped>) -> Driver<Element.Wrapped> {
+    @warn_unused_result(message:"http://git.io/rxs.uo")
+    public func catchOnNil(_ handler: () -> Driver<Element.Wrapped>) -> Driver<Element.Wrapped> {
         return self.flatMap { element -> Driver<Element.Wrapped> in
             guard let value = element.value else {
                 return handler()
